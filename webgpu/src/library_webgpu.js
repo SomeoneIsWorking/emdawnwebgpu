@@ -1367,7 +1367,15 @@ var LibraryWebGPU = {
     if (dynamicOffsetCount == 0) {
       pass.setBindGroup(groupIndex, group);
     } else {
-      pass.setBindGroup(groupIndex, group, HEAPU32, {{{ getHeapOffset('dynamicOffsetsPtr', 'u32') }}}, dynamicOffsetCount);
+      // A view of just these offsets, not of the whole heap. Firefox refuses
+      // an ArrayBufferView larger than 2GB for this argument, so on a build
+      // whose memory has grown past 2GB every call with dynamic offsets threw
+      // "Argument 3 can't be an ArrayBuffer or an ArrayBufferView larger than
+      // 2 GB" and took the thread that was recording the frame with it.
+      var dynamicOffsetsBegin = {{{ getHeapOffset('dynamicOffsetsPtr', 'u32') }}};
+      pass.setBindGroup(groupIndex, group,
+                        HEAPU32.subarray(dynamicOffsetsBegin, dynamicOffsetsBegin + dynamicOffsetCount),
+                        0, dynamicOffsetCount);
     }
   },
 
@@ -2236,7 +2244,15 @@ var LibraryWebGPU = {
     if (dynamicOffsetCount == 0) {
       pass.setBindGroup(groupIndex, group);
     } else {
-      pass.setBindGroup(groupIndex, group, HEAPU32, {{{ getHeapOffset('dynamicOffsetsPtr', 'u32') }}}, dynamicOffsetCount);
+      // A view of just these offsets, not of the whole heap. Firefox refuses
+      // an ArrayBufferView larger than 2GB for this argument, so on a build
+      // whose memory has grown past 2GB every call with dynamic offsets threw
+      // "Argument 3 can't be an ArrayBuffer or an ArrayBufferView larger than
+      // 2 GB" and took the thread that was recording the frame with it.
+      var dynamicOffsetsBegin = {{{ getHeapOffset('dynamicOffsetsPtr', 'u32') }}};
+      pass.setBindGroup(groupIndex, group,
+                        HEAPU32.subarray(dynamicOffsetsBegin, dynamicOffsetsBegin + dynamicOffsetCount),
+                        0, dynamicOffsetCount);
     }
   },
 
@@ -2361,7 +2377,15 @@ var LibraryWebGPU = {
     if (dynamicOffsetCount == 0) {
       pass.setBindGroup(groupIndex, group);
     } else {
-      pass.setBindGroup(groupIndex, group, HEAPU32, {{{ getHeapOffset('dynamicOffsetsPtr', 'u32') }}}, dynamicOffsetCount);
+      // A view of just these offsets, not of the whole heap. Firefox refuses
+      // an ArrayBufferView larger than 2GB for this argument, so on a build
+      // whose memory has grown past 2GB every call with dynamic offsets threw
+      // "Argument 3 can't be an ArrayBuffer or an ArrayBufferView larger than
+      // 2 GB" and took the thread that was recording the frame with it.
+      var dynamicOffsetsBegin = {{{ getHeapOffset('dynamicOffsetsPtr', 'u32') }}};
+      pass.setBindGroup(groupIndex, group,
+                        HEAPU32.subarray(dynamicOffsetsBegin, dynamicOffsetsBegin + dynamicOffsetCount),
+                        0, dynamicOffsetCount);
     }
   },
 
