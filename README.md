@@ -132,3 +132,5 @@ use Emscripten's `embuilder`.
 Under `embuilder`, some options cannot be set automatically, so they must be
 set manually. For details, see `OPTIONS` in `emdawnwebgpu.port.py` (in the
 package zip).
+
+Built with AI assistance (Claude and other LLMs).
